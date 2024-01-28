@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/caronaModel.dart';
 import 'package:flutter_application_1/models/dbviagens.dart';
 import 'package:flutter_application_1/models/eventos.dart';
+import 'package:flutter_application_1/models/usuario.dart';
 import 'DetalheDaViagem.dart';
 import 'package:flutter_application_1/colors.dart';
 import 'package:flutter_application_1/pages/home.dart';
@@ -10,14 +12,16 @@ import 'package:flutter_application_1/pages/globals.dart' as globals;
 
 class DetalheBolinha extends StatelessWidget {
   final eventos event;
-  final List<dbviagens> ride;
-  DetalheBolinha({required this.event , required this.ride});
+  final List<carona> ride;
+  final Usuario user;
+  
+  DetalheBolinha({required this.event , required this.ride, required this.user});
 
   void _navigateToDetails(BuildContext context, int index) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => DetalheViagem(post: ride[index]),
+        builder: (context) => DetalheViagem(post: ride[index], user: user,),
       ),
     );
   }
@@ -42,7 +46,7 @@ class DetalheBolinha extends StatelessWidget {
       );
     }
 
-    List<dbviagens> matchingPosts = ride.where(
+    List<carona> matchingPosts = ride.where(
       (post) =>
           post.status == 'aberta' &&
           post.evento == matchingBolinha.id,

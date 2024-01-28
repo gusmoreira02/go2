@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/caronaModel.dart';
 import 'package:flutter_application_1/models/usuario.dart';
 import 'DetalheDaViagem.dart';
 import 'globals.dart';
@@ -6,12 +7,12 @@ import 'package:flutter_application_1/models/dbviagens.dart';
 
 class Viagens extends StatelessWidget {
   final Usuario user;
- final List<dbviagens> ride;
+ final List<carona> ride;
   const Viagens({super.key, required this.user, required this.ride});
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    List<dbviagens> relevantPosts = [];
+    List<carona> relevantPosts = [];
 
     for (var usuarioCarona in usuarioCarona) {
       final idCarona = usuarioCarona['idCarona'];
@@ -24,9 +25,9 @@ class Viagens extends StatelessWidget {
       }
     }
 
-    List<dbviagens> pendingPosts =
+    List<carona> pendingPosts =
         relevantPosts.where((post) => post.status == 'aberta').toList();
-    List<dbviagens> completedPosts =
+    List<carona> completedPosts =
         relevantPosts.where((post) => post.status == 'terminada').toList();
 
     return SingleChildScrollView(
@@ -265,11 +266,11 @@ class Viagens extends StatelessWidget {
     );
   }
 
-  void _navigateToDetails(BuildContext context, dbviagens post) {
+  void _navigateToDetails(BuildContext context, carona post) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => DetalheViagem(post: post),
+        builder: (context) => DetalheViagem(post: post, user: user,),
       ),
     );
   }

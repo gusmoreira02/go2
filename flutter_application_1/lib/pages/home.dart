@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/caronaModel.dart';
 import 'package:flutter_application_1/models/eventos.dart';
 import 'package:flutter_application_1/models/dbviagens.dart';
 import 'package:flutter_application_1/models/usuario.dart';
@@ -8,11 +9,13 @@ import 'DetalheBolinhas.dart';
 import 'globals.dart';
 import 'DetalheDaViagem.dart';
 import 'package:flutter_application_1/pages/globals.dart';
+import 'package:flutter_application_1/controller/caronaController.dart';
 
 class Home extends StatefulWidget {
    final Usuario user;
    final List<eventos> events;
-   final List<dbviagens> ride;
+   final List<carona> ride;
+   
   const Home({Key? key, required this.user, required this.events , required this.ride}) : super(key: key);
   @override
   _HomeState createState() => _HomeState();
@@ -21,33 +24,35 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<eventos> _filteredBolinhas = [];
-  List<dbviagens> _filteredPosts = [];
+  List<carona> _filteredPosts = [];
+  List<carona> posts = [];
   //Map<String, String> _usuario = {};
   List<eventos> bolinha = [];
-  List<dbviagens> posts = Viagem;
+  final caronaController cc = new caronaController();
 
   
     
-  void _navigateToBolinhasDetails(BuildContext context, int index) {
+  void _navigateToBolinhasDetails(BuildContext context, int index, Usuario user) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => DetalheBolinha(event: widget.events[index], ride: posts),
+        builder: (context) => DetalheBolinha(event: widget.events[index], ride: posts, user: user,),
       ),
     );
   }
 
-  void _navigateToDetails(BuildContext context, int index) {
+  void _navigateToDetails(BuildContext context, int index, Usuario user) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => DetalheViagem(post: _filteredPosts[index]),
+        builder: (context) => DetalheViagem(post: _filteredPosts[index], user: user,),
       ),
     );
   }
 
   void searchBolinhas(String searchText) {
     setState(() {
+      print(posts);
       if (searchText.isEmpty) {
         _filteredBolinhas = List.from(bolinha);
       } else {
@@ -58,10 +63,20 @@ class _HomeState extends State<Home> {
     });
   }
 
+  Future<void> getData() async {
+      posts = await cc.getCarona();
+      setState(() {
+        _filteredPosts = posts;
+      });
+
+  }
+
   
   @override
   void initState() {
+     getData();
     super.initState();
+
     //_usuario = usuario;
     bolinha = widget.events;
     _filteredBolinhas = widget.events;
@@ -137,6 +152,7 @@ class _HomeState extends State<Home> {
                       _navigateToBolinhasDetails(
                         context,
                         index,
+                        widget.user,
                       );
                     },
                     child: Container(
@@ -198,7 +214,7 @@ class _HomeState extends State<Home> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: GestureDetector(
-                      onTap: () => _navigateToDetails(context, index),
+                      onTap: () => _navigateToDetails(context, index, widget.user,),
                       child: Stack(
                         children: [
                           Container(

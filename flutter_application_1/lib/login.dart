@@ -123,14 +123,15 @@ class Login extends StatelessWidget {
                           final uri = Uri.parse('${url}/user/logar?email=${email}&senha=${senha}');
                           
                             final e = await http.get(uri);
+                            print(e);
                             if(e.body.isEmpty) return;
                             Usuario u = Usuario.fromUsuario();
                             u = Usuario.fromJson(jsonDecode(e.body));
-                          
+                            print(u);
                           if(u.id != ""){
 
 
-                            final ev = await http.get(Uri.parse('${url}/event'));
+                            /* final ev = await http.get(Uri.parse('${url}/event'));
                          
                            //e = jsonEncode(http.get(Uri.parse('http://192.168.1.102:3000/event'))) as eventos;
                            List<eventos> Evento = [];
@@ -146,9 +147,11 @@ class Login extends StatelessWidget {
                             List<dynamic> listaViagem = jsonDecode(v.body);
 
                             listaViagem.forEach((a){ Viagem.add(dbviagens.fromJson(a));
-  
+                              
 
                    });
+                   */
+
                             Navigator.of(context).push(
               
               MaterialPageRoute(builder: (context) => HomePage(user: u, events: Evento, ride: Viagem)),

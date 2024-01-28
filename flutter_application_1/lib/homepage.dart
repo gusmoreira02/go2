@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/caronaModel.dart';
 import 'package:flutter_application_1/models/dbviagens.dart';
 import 'package:flutter_application_1/models/eventos.dart';
 import 'package:flutter_application_1/models/usuario.dart';
@@ -11,7 +12,7 @@ import 'package:flutter_application_1/colors.dart';
 class HomePage extends StatefulWidget {
   final Usuario user;
   final List<eventos> events;
-  final List<dbviagens> ride;
+  final List<carona> ride;
   const HomePage({Key? key, required this.user, required this.events, required this.ride}) : super(key: key);
 
   @override

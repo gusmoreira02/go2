@@ -27,6 +27,7 @@ route.get("/user", async (_req: Request, res: Response) => {
 });
 
 route.get("/user/logar", async (_req: Request, res: Response) => {
+  console.log('aa');
   var usuario = _req.body as user
   if( _req.query['email'] != undefined && _req.query['senha'] != undefined){
  res.status(200).send( await logar(_req.query['email'] as string, _req.query['senha'] as string));

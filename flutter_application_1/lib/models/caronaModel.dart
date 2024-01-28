@@ -1,5 +1,5 @@
 class carona{
-  String id = '';
+  String? id = '';
   String nomeCarona = "";
   int assentos =0;
   double valor =0.0;
@@ -8,7 +8,7 @@ class carona{
   String data = "";
   String hPartida = "";
   String descricao = "";
-  String? foto = "";
+  String foto = "";
   String? evento = "";
   String idResponsavel= "";
   String status = "";
@@ -16,6 +16,7 @@ class carona{
   String modelo = "";
   String placa = "";
       carona({
+         this.id,
     required this.nomeCarona,
     required this.assentos,
     required this.valor,
@@ -24,7 +25,7 @@ class carona{
     required this.data,
     required this.hPartida,
     required this.descricao,
-             this.foto,
+    required this.foto,
     required this.evento,
     required this.idResponsavel,
     required this.status,
@@ -51,6 +52,27 @@ return {
   "modelo":this.modelo,
   "placa":this.placa,
 };
+
+  }
+    factory carona.fromJson(Map<String, dynamic> json){
+return carona(
+   id: json['_id'],
+nomeCarona: json['nomeCarona'],
+ assentos: int.parse(json['assentos']),
+  valor: double.parse(json['valor']),
+  partida: json['partida'],
+   destino: json['destino'],
+    data: json['data'],
+     hPartida: json['hPartida'],
+      descricao: json['descricao'],
+      foto: json['foto'],
+       evento: json['evento'],
+        idResponsavel: json['idResponsavel'],
+         status: json['status'],
+          nomeMotorista: json['nomeMotorista'],
+           modelo: json['modelo'],
+            placa: json['placa']);
+            
 
   }
 

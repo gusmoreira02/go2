@@ -2,13 +2,14 @@ library flutter_application_1.globals;
 import 'dart:convert';
 
 import 'package:flutter_application_1/models/UsuarioViagem.dart';
+import 'package:flutter_application_1/models/caronaModel.dart';
 import 'package:flutter_application_1/models/eventos.dart';
 import 'package:flutter_application_1/models/dbviagens.dart';
 import 'package:http/http.dart' as http;
 import 'dart:developer';
 
 import 'package:path_provider/path_provider.dart';
-String url = "https://vancrazy.rj.r.appspot.com";
+String url = "http://192.168.3.13:3000";
 
 // https://vancrazy.rj.r.appspot.com/
 // http://192.168.1.102:3000/
@@ -56,7 +57,7 @@ Future<List<usuarioViagem>>getUsarioViagem() async {
 }
 
 List<eventos> Evento = [];
-List<dbviagens> Viagem = [];
+List<carona> Viagem = [];
 
 
 List<Map<String, String>> _posts = [];
